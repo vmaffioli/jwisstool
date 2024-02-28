@@ -3,14 +3,14 @@ package com.vmaffioli.jwisstool.engine.configuration;
 import lombok.Getter;
 
 @Getter
-public enum GlobalCfgEnum {
+public enum ProfileCfgEnum {
 
-	TEST("TestGlobalConfig", new String[] { "1", "2" });
+	TEST("TestProfileConfig", new String[] { "1", "2" });
 
 	private final String key;
 	private final String[] values;
 
-	GlobalCfgEnum(String key, String[] values) {
+	ProfileCfgEnum(String key, String[] values) {
 		this.key = key;
 		this.values = values;
 	};

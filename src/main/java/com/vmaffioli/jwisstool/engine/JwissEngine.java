@@ -5,48 +5,58 @@ import com.vmaffioli.jwisstool.engine.bootstrap.InterfaceLoader;
 import com.vmaffioli.jwisstool.engine.cli.CommandLineInterface;
 import com.vmaffioli.jwisstool.engine.pojo.Configuration;
 
-public class JwissEngine implements Runnable {
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+public class JwissEngine {
 
 	private Configuration globalCfg;
+	private Configuration profileCfg;
+
 	private CommandLineInterface cli;
 
 	private boolean runnable;
 
-	public JwissEngine() {
-
-		build();
-		this.runnable = true;
-	}
-
-	@Override // TODO docs
+	// TODO docs
 	public void run() {
-		runnable = true;
+		System.out.println(">>> running engine...");
+		this.runnable = true;
 
-		while (runnable)
-
+		while (runnable) {
+			System.out.println(">>> type something: ");
 			this.cli.nextLine();
-			
+
+			if (this.cli.getInput().equals("exit")) {
+				System.out.println(">>> stoping engine...");
+				this.runnable = false;
+				System.out.println(">>> engine stopped, bye!");
+
+			} else if (this.cli.getInput().equals("globalcfg")) {
+				System.out.println(">>> getting global config...");
+				System.out.println(globalCfg.toString());
+			} else if (this.cli.getInput().equals("profilecfg")) {
+				System.out.println(">>> getting profile config...");
+				System.out.println(profileCfg.toString());
+			}
+		}
 
 	}
 
 	// TODO docs
-	public void build() {
+	public JwissEngine build() {
+
+		System.out.println(">>> build engine...");
 
 		ConfigurationLoader cfgInitializer = new ConfigurationLoader();
 		this.globalCfg = cfgInitializer.getGlobalCfg();
+		this.profileCfg = cfgInitializer.getProfileCfg();
 
 		InterfaceLoader itfInitializer = new InterfaceLoader();
 		this.cli = itfInitializer.getCli();
 
-	}
+		System.out.println(">>> build engine finished.");
 
-	// TODO docs
-	public void start() {
-
-	}
-
-	// TODO docs
-	public void stop() {
+		return this;
 
 	}
 
