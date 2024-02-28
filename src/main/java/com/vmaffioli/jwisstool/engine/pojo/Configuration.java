@@ -14,14 +14,14 @@ public class Configuration {
 
 	// TODO doc
 	@NotBlank
-	private String name; // TODO CriticalMessages
+	private String key; // TODO CriticalMessages
 
 	// TODO doc
 	@NotNull
 	private List<Option> options; // TODO CriticalMessages
 
-	public Configuration(String name, List<Option> options) {
-		this.name = name;
+	public Configuration(String key, List<Option> options) {
+		this.key = key;
 		this.options = options;
 
 	}

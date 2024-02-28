@@ -21,11 +21,16 @@ import lombok.Getter;
 @Getter
 public class ConfigurationLoader {
 
-	private Configuration globalCfg;
-	private Configuration profileCfg;
+	protected Configuration globalCfg;
+	protected Configuration profileCfg;
 	// TODO const paths
 
 	public ConfigurationLoader() {
+		this.globalCfg = globalCfgBuild();
+		this.profileCfg = profileCfgBuild();
+	}
+
+	public ConfigurationLoader(String pluginPath) {
 		this.globalCfg = globalCfgBuild();
 		this.profileCfg = profileCfgBuild();
 	}
@@ -66,6 +71,39 @@ public class ConfigurationLoader {
 
 	// TODO docs
 	private Configuration profileCfgBuild() {
+
+		System.out.println(">>> building profile config...");
+
+		List<Option> options = new ArrayList<>(); // TODO better name
+
+		Map<String, String> activeOptions = loadActiveOptions("path/to/your/.profile"); // TODO better name and Replace
+																						// with your .profile file path
+
+		for (ProfileCfgEnum cfg : ProfileCfgEnum.values()) { // TODO perfomance
+
+			String optKey = cfg.getKey();
+			List<String> optValues = Arrays.asList(cfg.getValues());
+
+			String activeOpt = activeOptions.get(optKey);
+
+			if (activeOptions.containsKey(optKey) && optValues.contains(activeOpt)) {
+
+				options.add(new Option(optKey, optValues, activeOpt));
+
+			}
+
+		}
+
+		@Valid
+		Configuration cfg1 = new Configuration("profile", options); // TODO global const
+
+		System.out.println(">>> profile config builded.");
+
+		return cfg1;
+	}
+
+	// TODO docs
+	public Configuration pluginCfgBuild(String path) {
 
 		System.out.println(">>> building profile config...");
 
