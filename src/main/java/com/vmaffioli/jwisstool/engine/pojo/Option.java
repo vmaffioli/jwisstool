@@ -1,37 +1,29 @@
 package com.vmaffioli.jwisstool.engine.pojo;
 
-import javax.validation.constraints.NotBlank;
+import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
+@AllArgsConstructor
 public class Option {
 
 	// TODO doc
 	@NotBlank
-	private String name; // TODO CriticalMessages
+	private String name;
 
 	// TODO doc
-	private String[] values; // TODO CriticalMessages
+	@NotNull
+	private List<String> values;
 
+	// TODO doc
 	@Setter
-	private String value;
-
-	@Setter
-	private boolean active;
-
-	// TODO use only one from values or value
-	public Option(String name, String[] values, boolean active) {
-		this.name = name;
-		this.values = values;
-		this.active = active;
-	}
-
-	public Option(String name, String value, boolean active) {
-		this.name = name;
-		this.value = value;
-		this.active = active;
-	}
+	@NotNull
+	private String active;
 
 }
