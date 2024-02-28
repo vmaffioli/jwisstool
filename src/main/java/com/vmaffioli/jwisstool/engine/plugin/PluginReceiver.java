@@ -3,7 +3,7 @@ package com.vmaffioli.jwisstool.engine.plugin;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.vmaffioli.jwissdevkit.plugin.Plugin;
+import com.vmaffioli.jwissdevkit.interfaces.Plugin;
 
 public class PluginReceiver {
 
@@ -14,7 +14,7 @@ public class PluginReceiver {
 	}
 
 	public PluginReceiver add(Plugin plugin) {
-		
+
 //		this.receiverMap.put(plugin.getKey(), command);
 		return this;
 	}

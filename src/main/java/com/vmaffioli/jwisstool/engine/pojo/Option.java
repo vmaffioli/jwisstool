@@ -9,19 +9,29 @@ import lombok.Setter;
 public class Option {
 
 	// TODO doc
-	@NotBlank	
+	@NotBlank
 	private String name; // TODO CriticalMessages
 
 	// TODO doc
 	private String[] values; // TODO CriticalMessages
 
 	@Setter
-	private String absoluteValue;
+	private String value;
 
-	public Option(String name, String[] values, String absoluteValue) {
+	@Setter
+	private boolean active;
+
+	// TODO use only one from values or value
+	public Option(String name, String[] values, boolean active) {
 		this.name = name;
 		this.values = values;
-		this.absoluteValue = values == null ? "" : absoluteValue;
+		this.active = active;
+	}
+
+	public Option(String name, String value, boolean active) {
+		this.name = name;
+		this.value = value;
+		this.active = active;
 	}
 
 }
