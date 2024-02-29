@@ -1,18 +1,17 @@
 package com.vmaffioli.jwisstool.engine.bootstrap;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.validation.Valid;
 
 import com.vmaffioli.jwisstool.engine.configuration.GlobalCfgEnum;
+import com.vmaffioli.jwisstool.engine.configuration.PluginCfgEnum;
 import com.vmaffioli.jwisstool.engine.configuration.ProfileCfgEnum;
+import com.vmaffioli.jwisstool.engine.constants.PostProcessorTokens;
 import com.vmaffioli.jwisstool.engine.model.Configuration;
 import com.vmaffioli.jwisstool.engine.model.Option;
 import com.vmaffioli.jwisstool.engine.utils.CfgFileReader;
@@ -42,9 +41,10 @@ public class ConfigurationLoader {
 		System.out.println(">>> building global config...");
 
 		// TODO fileName and paths const
-		List<Option> options = new ArrayList<>(); // TODO better name
+		List<Option> options = new ArrayList<>();
 
-		Map<String, String> activeOptions = loadActiveOptions("path/to/your/.profile"); // TODO better name and Replace
+		Map<String, String> activeOptions = CfgFileReader.fileToMap("path/to/your/.profile"); // TODO better name and
+																								// Replace
 		// with your .profile file path
 
 		for (GlobalCfgEnum cfg : GlobalCfgEnum.values()) { // TODO perfomance
@@ -75,10 +75,11 @@ public class ConfigurationLoader {
 
 		System.out.println(">>> building profile config...");
 
-		List<Option> options = new ArrayList<>(); // TODO better name
+		List<Option> options = new ArrayList<>();
 
-		Map<String, String> activeOptions = loadActiveOptions("path/to/your/.profile"); // TODO better name and Replace
-																						// with your .profile file path
+		Map<String, String> activeOptions = CfgFileReader.fileToMap("path/to/your/.profile"); // TODO better name and
+																								// Replace
+		// with your .profile file path
 
 		for (ProfileCfgEnum cfg : ProfileCfgEnum.values()) { // TODO perfomance
 
@@ -104,37 +105,48 @@ public class ConfigurationLoader {
 	}
 
 	// TODO docs
-	public Configuration pluginCfgBuild(String path) {
+	public Configuration pluginCfgBuild(String path) throws Exception {
 
-		Map<String, String> config = CfgFileReader.loadConfig(path);
+		List<Option> options = new ArrayList<>();
+
+		Map<String, String> activeOptions = CfgFileReader.fileToMap(path); // TODO better names for activeOptions
+
+		for (PluginCfgEnum cfg : PluginCfgEnum.values()) {
+			String optKey = cfg.getKey();
+
+			if (activeOptions.containsKey(optKey)) {
+
+				@Valid
+				Option opt = new Option(optKey, Arrays.asList(cfg.getValues()), null); // TODO get default value if
+																						// active isnt informed
+				options.add(opt);
+
+				activeOptions.remove(optKey);
+
+			} else {
+				throw new Exception("missing mandatory configuration"); // TODO exceptiosn flow
+
+			}
+		}
+
+		for (Entry<String, String> activeOption : activeOptions.entrySet()) { // TODO performance
+
+			@Valid
+			Option opt = new Option(activeOption.getKey(), PostProcessorTokens.OPT_VALUES, activeOption.getValue()); // TODO
+																														// get
+			// default
+			// value if
+			// active isnt informed
+			options.add(opt);
+
+		}
 
 		@Valid
-		Configuration cfg1 = new Configuration("profile", options); // TODO global const
+		Configuration configuration = new Configuration("profile", options); // TODO global const
 
 		System.out.println(">>> profile config builded.");
 
-		return cfg1;
-	}
-
-	// TODO docs
-	private Map<String, String> loadActiveOptions(String fileName) {
-		Map<String, String> activeOptions = new HashMap<>(); // TODO better name
-// TODO move to utils
-		try {
-			List<String> lines = Files.readAllLines(Paths.get(fileName));
-
-			// TODO more performance here - Iterate through the lines and populate the map
-			for (String line : lines) {
-				if (!line.startsWith("#") && line.contains("=")) {
-					String[] parts = line.split("=");
-					activeOptions.put(parts[0].trim(), parts[1].trim());
-				}
-			}
-
-		} catch (IOException e) {
-			System.err.println("Error reading file: " + e.getMessage());
-		}
-		return activeOptions;
+		return configuration;
 	}
 
 }

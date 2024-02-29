@@ -10,6 +10,8 @@ import java.util.Properties;
 
 public class CfgFileReader {
 
+	
+	// TODO docs
 	public static Map<String, String> fileToMap(String path) {
 		File folder = new File(path);
 		if (!folder.isDirectory()) {
@@ -34,4 +36,5 @@ public class CfgFileReader {
 
 		return config;
 	}
+
 }

@@ -2,7 +2,7 @@ package com.vmaffioli.jwisstool.engine.bootstrap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.sun.source.util.Plugin;
+import com.vmaffioli.jwisstool.engine.model.Configuration;
 import com.vmaffioli.jwisstool.engine.plugin.PluginReceiver;
 
 import lombok.Getter;
@@ -23,9 +23,12 @@ public class PluginsLoader {
 		this.receiver = new PluginReceiver();
 	}
 
-	public void load(String[] pluginsPathList) {
+	public void load(String[] pluginsPathList) throws Exception { // TODO exception flow
 
 		for (String pluginPath : pluginsPathList) { // TODO performance
+
+			Configuration pluginCfgBuild = cfgInitializer.pluginCfgBuild(pluginPath);
+			// TODO IM HERE!
 
 		}
 

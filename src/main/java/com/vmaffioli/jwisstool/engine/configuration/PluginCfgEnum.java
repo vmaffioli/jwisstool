@@ -5,11 +5,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum GlobalCfgEnum implements CfgEnum{
+public enum PluginCfgEnum implements CfgEnum{
 
-	TEST("TestGlobalConfig", new String[] { "1", "2" });
+	TEST("TestPluginConfig", new String[] { "1", "2" });
 
-// TODO  notnull validations
 	private final String key;
 	private final String[] values;
 
