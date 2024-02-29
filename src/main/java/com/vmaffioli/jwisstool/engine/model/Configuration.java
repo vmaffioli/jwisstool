@@ -1,4 +1,4 @@
-package com.vmaffioli.jwisstool.engine.pojo;
+package com.vmaffioli.jwisstool.engine.model;
 
 import java.util.List;
 

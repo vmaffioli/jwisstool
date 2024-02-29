@@ -3,7 +3,7 @@ package com.vmaffioli.jwisstool.engine;
 import com.vmaffioli.jwisstool.engine.bootstrap.ConfigurationLoader;
 import com.vmaffioli.jwisstool.engine.bootstrap.InterfaceLoader;
 import com.vmaffioli.jwisstool.engine.cli.CommandLineInterface;
-import com.vmaffioli.jwisstool.engine.pojo.Configuration;
+import com.vmaffioli.jwisstool.engine.model.Configuration;
 
 import lombok.NoArgsConstructor;
 

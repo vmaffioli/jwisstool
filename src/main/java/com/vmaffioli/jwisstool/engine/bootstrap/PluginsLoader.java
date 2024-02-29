@@ -2,8 +2,8 @@ package com.vmaffioli.jwisstool.engine.bootstrap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.sun.source.util.Plugin;
 import com.vmaffioli.jwisstool.engine.plugin.PluginReceiver;
-import com.vmaffioli.jwisstool.engine.pojo.Configuration;
 
 import lombok.Getter;
 
@@ -19,17 +19,17 @@ public class PluginsLoader {
 	@Getter
 	private PluginReceiver receiver;
 
-	private String[] paths;
-
 	public PluginsLoader() {
-
-		ConfigurationLoader cfgInitializer = new ConfigurationLoader();
-
-		this.globalCfg = cfgInitializer.globalCfg;
-		this.globalCfg = cfgInitializer.globalCfg;
-
 		this.receiver = new PluginReceiver();
+	}
 
+	public void load(String[] pluginsPathList) {
+
+		for (String pluginPath : pluginsPathList) { // TODO performance
+
+		}
+
+//		this.receiver.put(plugin.getName(), plugin);
 	}
 
 }

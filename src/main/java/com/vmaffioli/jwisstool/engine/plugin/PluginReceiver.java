@@ -13,10 +13,8 @@ public class PluginReceiver {
 		this.receiverMap = new HashMap<>();
 	}
 
-	public PluginReceiver add(Plugin plugin) {
-
-//		this.receiverMap.put(plugin.getKey(), command);
-		return this;
+	public void put(String key, Plugin plugin) {
+		this.receiverMap.put(key, plugin);
 	}
 
 	public void run(String key) {

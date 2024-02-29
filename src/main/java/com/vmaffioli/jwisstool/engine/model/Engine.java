@@ -1,4 +1,4 @@
-package com.vmaffioli.jwisstool.engine.pojo;
+package com.vmaffioli.jwisstool.engine.model;
 
 import com.vmaffioli.jwisstool.engine.cli.CommandLineInterface;
 import com.vmaffioli.jwisstool.engine.plugin.PluginReceiver;

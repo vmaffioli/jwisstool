@@ -13,8 +13,9 @@ import javax.validation.Valid;
 
 import com.vmaffioli.jwisstool.engine.configuration.GlobalCfgEnum;
 import com.vmaffioli.jwisstool.engine.configuration.ProfileCfgEnum;
-import com.vmaffioli.jwisstool.engine.pojo.Configuration;
-import com.vmaffioli.jwisstool.engine.pojo.Option;
+import com.vmaffioli.jwisstool.engine.model.Configuration;
+import com.vmaffioli.jwisstool.engine.model.Option;
+import com.vmaffioli.jwisstool.engine.utils.CfgFileReader;
 
 import lombok.Getter;
 
@@ -105,27 +106,7 @@ public class ConfigurationLoader {
 	// TODO docs
 	public Configuration pluginCfgBuild(String path) {
 
-		System.out.println(">>> building profile config...");
-
-		List<Option> options = new ArrayList<>(); // TODO better name
-
-		Map<String, String> activeOptions = loadActiveOptions("path/to/your/.profile"); // TODO better name and Replace
-																						// with your .profile file path
-
-		for (ProfileCfgEnum cfg : ProfileCfgEnum.values()) { // TODO perfomance
-
-			String optKey = cfg.getKey();
-			List<String> optValues = Arrays.asList(cfg.getValues());
-
-			String activeOpt = activeOptions.get(optKey);
-
-			if (activeOptions.containsKey(optKey) && optValues.contains(activeOpt)) {
-
-				options.add(new Option(optKey, optValues, activeOpt));
-
-			}
-
-		}
+		Map<String, String> config = CfgFileReader.loadConfig(path);
 
 		@Valid
 		Configuration cfg1 = new Configuration("profile", options); // TODO global const
@@ -138,7 +119,7 @@ public class ConfigurationLoader {
 	// TODO docs
 	private Map<String, String> loadActiveOptions(String fileName) {
 		Map<String, String> activeOptions = new HashMap<>(); // TODO better name
-
+// TODO move to utils
 		try {
 			List<String> lines = Files.readAllLines(Paths.get(fileName));
 

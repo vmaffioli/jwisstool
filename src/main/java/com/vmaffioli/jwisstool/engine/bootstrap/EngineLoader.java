@@ -1,6 +1,6 @@
 package com.vmaffioli.jwisstool.engine.bootstrap;
 
-import com.vmaffioli.jwisstool.engine.pojo.Engine;
+import com.vmaffioli.jwisstool.engine.model.Engine;
 
 public class EngineLoader {
 
