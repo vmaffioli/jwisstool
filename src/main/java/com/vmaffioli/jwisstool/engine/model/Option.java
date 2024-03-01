@@ -2,9 +2,7 @@ package com.vmaffioli.jwisstool.engine.model;
 
 import java.util.List;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +10,10 @@ import lombok.Setter;
 public class Option {
 
 	// TODO doc
-	private String name;
+	private String key;
+
+	// TODO doc
+	private String description;
 
 	// TODO doc
 	private List<String> values;
@@ -21,12 +22,11 @@ public class Option {
 	@Setter
 	private String active;
 
-	// TODO check if notblank or other validations are trigering when using in
-	// method inputs
-	public Option(@NotBlank String name, @Size(min = 1) List<String> values, String active) {
-		this.name = name;
+	public Option(String key, String description, List<String> values, String active) {
+		this.key = key;
+		this.description = description;
 		this.values = values;
-		this.active = active.isBlank() ? this.values.get(0) : active; // TODO doc
+		this.active = active;
 	}
 
 }

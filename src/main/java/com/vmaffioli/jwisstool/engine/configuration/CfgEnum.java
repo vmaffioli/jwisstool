@@ -6,4 +6,6 @@ public interface CfgEnum {
 
 	public String[] getValues();
 
+	public String getDescription();
+
 }

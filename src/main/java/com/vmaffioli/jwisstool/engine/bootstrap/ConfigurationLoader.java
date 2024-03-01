@@ -1,7 +1,7 @@
 package com.vmaffioli.jwisstool.engine.bootstrap;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -11,7 +11,6 @@ import javax.validation.Valid;
 import com.vmaffioli.jwisstool.engine.configuration.GlobalCfgEnum;
 import com.vmaffioli.jwisstool.engine.configuration.PluginCfgEnum;
 import com.vmaffioli.jwisstool.engine.configuration.ProfileCfgEnum;
-import com.vmaffioli.jwisstool.engine.constants.PostProcessorTokens;
 import com.vmaffioli.jwisstool.engine.model.Configuration;
 import com.vmaffioli.jwisstool.engine.model.Option;
 import com.vmaffioli.jwisstool.engine.utils.CfgFileReader;
@@ -41,7 +40,7 @@ public class ConfigurationLoader {
 		System.out.println(">>> building global config...");
 
 		// TODO fileName and paths const
-		List<Option> options = new ArrayList<>();
+		Map<String, Option> options = new HashMap<>();
 
 		Map<String, String> activeOptions = CfgFileReader.fileToMap("path/to/your/.profile"); // TODO better name and
 																								// Replace
@@ -55,10 +54,9 @@ public class ConfigurationLoader {
 			String activeOpt = activeOptions.get(optKey);
 
 			if (activeOptions.containsKey(optKey) && optValues.contains(activeOpt)) {
-
-				options.add(new Option(optKey, optValues, activeOpt));
-
-			}
+				Option opt = new Option(optKey, cfg.getDescription(), Arrays.asList(cfg.getValues()), activeOpt);
+				options.put(optKey, opt);
+			} // TODO invalid option flow
 
 		}
 
@@ -75,7 +73,7 @@ public class ConfigurationLoader {
 
 		System.out.println(">>> building profile config...");
 
-		List<Option> options = new ArrayList<>();
+		Map<String, Option> options = new HashMap<>();
 
 		Map<String, String> activeOptions = CfgFileReader.fileToMap("path/to/your/.profile"); // TODO better name and
 																								// Replace
@@ -89,10 +87,10 @@ public class ConfigurationLoader {
 			String activeOpt = activeOptions.get(optKey);
 
 			if (activeOptions.containsKey(optKey) && optValues.contains(activeOpt)) {
+				Option opt = new Option(optKey, cfg.getDescription(), Arrays.asList(cfg.getValues()), activeOpt);
+				options.put(optKey, opt);
 
-				options.add(new Option(optKey, optValues, activeOpt));
-
-			}
+			} // TODO invalid option flow
 
 		}
 
@@ -107,7 +105,7 @@ public class ConfigurationLoader {
 	// TODO docs
 	public Configuration pluginCfgBuild(String path) throws Exception {
 
-		List<Option> options = new ArrayList<>();
+		Map<String, Option> options = new HashMap<>();
 
 		Map<String, String> activeOptions = CfgFileReader.fileToMap(path); // TODO better names for activeOptions
 
@@ -116,10 +114,8 @@ public class ConfigurationLoader {
 
 			if (activeOptions.containsKey(optKey)) {
 
-				@Valid
-				Option opt = new Option(optKey, Arrays.asList(cfg.getValues()), null); // TODO get default value if
-																						// active isnt informed
-				options.add(opt);
+				Option opt = new Option(optKey, cfg.getDescription(), Arrays.asList(cfg.getValues()), null);
+				options.put(optKey, opt);
 
 				activeOptions.remove(optKey);
 
@@ -130,14 +126,9 @@ public class ConfigurationLoader {
 		}
 
 		for (Entry<String, String> activeOption : activeOptions.entrySet()) { // TODO performance
-
-			@Valid
-			Option opt = new Option(activeOption.getKey(), PostProcessorTokens.OPT_VALUES, activeOption.getValue()); // TODO
-																														// get
-			// default
-			// value if
-			// active isnt informed
-			options.add(opt);
+			String key = activeOption.getKey();
+			Option opt = new Option(key, null, null, activeOption.getValue());
+			options.put(key, opt);
 
 		}
 

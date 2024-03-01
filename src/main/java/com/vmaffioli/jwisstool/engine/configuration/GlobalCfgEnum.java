@@ -5,12 +5,13 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum GlobalCfgEnum implements CfgEnum{
+public enum GlobalCfgEnum implements CfgEnum {
 
-	TEST("TestGlobalConfig", new String[] { "1", "2" });
+	TEST("TestGlobalConfig", "Test for Global Configurations.", new String[] { "1", "2" });
 
 // TODO  notnull validations
 	private final String key;
+	private final String description;
 	private final String[] values;
 
 }
