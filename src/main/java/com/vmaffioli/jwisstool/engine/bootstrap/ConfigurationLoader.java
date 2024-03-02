@@ -1,5 +1,6 @@
 package com.vmaffioli.jwisstool.engine.bootstrap;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -24,19 +25,23 @@ public class ConfigurationLoader {
 	protected Configuration profileCfg;
 	// TODO const paths
 
-	public ConfigurationLoader() {
+	public ConfigurationLoader() throws IOException {
+		// TODO exception flow
+
 		this.globalCfg = globalCfgBuild();
 		this.profileCfg = profileCfgBuild();
 	}
 
-	public ConfigurationLoader(String pluginPath) {
+	public ConfigurationLoader(String pluginPath) throws IOException {
+		// TODO exception flow
+
 		this.globalCfg = globalCfgBuild();
 		this.profileCfg = profileCfgBuild();
 	}
 
 	// TODO docs
-	private Configuration globalCfgBuild() {
-
+	private Configuration globalCfgBuild() throws IOException {
+// TODO exception flow
 		System.out.println(">>> building global config...");
 
 		// TODO fileName and paths const
@@ -69,7 +74,7 @@ public class ConfigurationLoader {
 	}
 
 	// TODO docs
-	private Configuration profileCfgBuild() {
+	private Configuration profileCfgBuild() throws IOException {
 
 		System.out.println(">>> building profile config...");
 

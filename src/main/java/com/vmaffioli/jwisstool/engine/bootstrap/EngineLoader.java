@@ -1,6 +1,8 @@
 package com.vmaffioli.jwisstool.engine.bootstrap;
 
-import com.vmaffioli.jwisstool.engine.model.Engine;
+import java.io.IOException;
+
+import com.vmaffioli.jwisstool.engine.Engine;
 
 public class EngineLoader {
 
@@ -10,7 +12,7 @@ public class EngineLoader {
 		this.engine = new Engine();
 	}
 
-	public Engine build() {
+	public Engine build() throws IOException {
 		System.out.println(">>> building engine...");
 
 		ConfigurationLoader configInitializer = new ConfigurationLoader();

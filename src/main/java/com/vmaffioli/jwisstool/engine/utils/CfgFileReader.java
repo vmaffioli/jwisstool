@@ -10,9 +10,10 @@ import java.util.Properties;
 
 public class CfgFileReader {
 
-	
 	// TODO docs
-	public static Map<String, String> fileToMap(String path) {
+	public static Map<String, String> fileToMap(String path) throws IOException {
+		
+		// TODO exception flow
 		File folder = new File(path);
 		if (!folder.isDirectory()) {
 			throw new IllegalArgumentException("The provided path is not a valid directory.");
@@ -24,16 +25,14 @@ public class CfgFileReader {
 		}
 
 		Map<String, String> config = new HashMap<>();
-		try (InputStream input = new FileInputStream(configFile)) {
+
+			InputStream input = new FileInputStream(configFile);
 			Properties props = new Properties();
 			props.load(input);
 			for (String key : props.stringPropertyNames()) {
 				config.put(key, props.getProperty(key));
 			}
-		} catch (IOException e) {
-			throw new IllegalStateException("Failed to load config.ini file.", e);
-		}
-
+	
 		return config;
 	}
 
