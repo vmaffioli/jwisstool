@@ -30,13 +30,9 @@ public class Engine implements Runnable {
 	public void run() {
 		// TODO start flow
 
-		while (true) {
+		while (this.cli.isOpen()) {
 			this.cli.nextLine();
 
-			if (this.cli.getInput().equals("exit")) {
-				System.out.println("BYE!");
-				break;
-			}
 		}
 
 	}

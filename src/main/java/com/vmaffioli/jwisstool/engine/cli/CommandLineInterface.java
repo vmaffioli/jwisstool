@@ -17,10 +17,28 @@ public class CommandLineInterface {
 	}
 
 	// TODO docs
-	public void nextLine() {
+	public CommandLineInterface nextLine() {
 		System.out.print("Enter a value: ");
 		this.input = scanner.nextLine();
 
+		switch (this.input) {
+		case "exit": { // TODO const
+			this.scanner.close();
+			this.scanner = null;
+
+			System.out.println("BYE!");
+
+		}
+		default:
+			System.out.println();
+
+		}
+
+		return this;
 	}
+
+	public boolean isOpen() {
+		return scanner == null ? false : true;
+	};
 
 }
