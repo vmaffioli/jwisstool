@@ -33,7 +33,8 @@ public class Engine implements Runnable {
 		while (true) {
 			this.cli.nextLine();
 
-			if (this.cli.getInput() == "exit") {
+			if (this.cli.getInput().equals("exit")) {
+				System.out.println("BYE!");
 				break;
 			}
 		}

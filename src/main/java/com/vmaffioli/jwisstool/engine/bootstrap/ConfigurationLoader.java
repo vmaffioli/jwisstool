@@ -47,7 +47,7 @@ public class ConfigurationLoader {
 		// TODO fileName and paths const
 		Map<String, Option> options = new HashMap<>();
 
-		Map<String, String> activeOptions = CfgFileReader.fileToMap("path/to/your/.profile"); // TODO better name and
+		Map<String, String> activeOptions = CfgFileReader.fileToMap("C:\\jwisstool\\config.ini"); // TODO better name and
 																								// Replace
 		// with your .profile file path
 
@@ -80,7 +80,7 @@ public class ConfigurationLoader {
 
 		Map<String, Option> options = new HashMap<>();
 
-		Map<String, String> activeOptions = CfgFileReader.fileToMap("path/to/your/.profile"); // TODO better name and
+		Map<String, String> activeOptions = CfgFileReader.fileToMap("C:\\jwisstool\\profiles\\default\\config.ini"); // TODO better name and
 																								// Replace
 		// with your .profile file path
 
