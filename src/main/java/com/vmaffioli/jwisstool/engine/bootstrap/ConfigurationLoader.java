@@ -9,11 +9,13 @@ import java.util.Map.Entry;
 
 import javax.validation.Valid;
 
+import org.springframework.cache.annotation.Cacheable;
+
+import com.vmaffioli.jwissdevkit.models.configuration.Configuration;
+import com.vmaffioli.jwissdevkit.models.configuration.Option;
 import com.vmaffioli.jwisstool.engine.configuration.GlobalCfgEnum;
 import com.vmaffioli.jwisstool.engine.configuration.PluginCfgEnum;
 import com.vmaffioli.jwisstool.engine.configuration.ProfileCfgEnum;
-import com.vmaffioli.jwisstool.engine.model.Configuration;
-import com.vmaffioli.jwisstool.engine.model.Option;
 import com.vmaffioli.jwisstool.engine.utils.CfgFileReader;
 
 import lombok.Getter;
@@ -21,8 +23,8 @@ import lombok.Getter;
 @Getter
 public class ConfigurationLoader {
 
-	protected Configuration globalCfg;
-	protected Configuration profileCfg;
+	private Configuration globalCfg;
+	private Configuration profileCfg;
 	// TODO const paths
 
 	public ConfigurationLoader() throws IOException {
@@ -40,6 +42,7 @@ public class ConfigurationLoader {
 	}
 
 	// TODO docs
+	@Cacheable(value = "configurations", key = "global")
 	private Configuration globalCfgBuild() throws IOException {
 // TODO exception flow
 		System.out.println(">>> building global config...");
@@ -47,8 +50,9 @@ public class ConfigurationLoader {
 		// TODO fileName and paths const
 		Map<String, Option> options = new HashMap<>();
 
-		Map<String, String> activeOptions = CfgFileReader.fileToMap("C:\\jwisstool\\config.ini"); // TODO better name and
-																								// Replace
+		Map<String, String> activeOptions = CfgFileReader.fileToMap("C:\\jwisstool\\config.ini"); // TODO better name
+																									// and
+																									// Replace
 		// with your .profile file path
 
 		for (GlobalCfgEnum cfg : GlobalCfgEnum.values()) { // TODO perfomance
@@ -61,6 +65,7 @@ public class ConfigurationLoader {
 			if (activeOptions.containsKey(optKey) && optValues.contains(activeOpt)) {
 				Option opt = new Option(optKey, cfg.getDescription(), Arrays.asList(cfg.getValues()), activeOpt);
 				options.put(optKey, opt);
+
 			} // TODO invalid option flow
 
 		}
@@ -73,15 +78,19 @@ public class ConfigurationLoader {
 		return cfg1;
 	}
 
-	// TODO docs
+	// TODO doc
+	@Cacheable(value = "configurations", key = "") // TODO how can I set multiples keys from some list (profile list in this case)
 	private Configuration profileCfgBuild() throws IOException {
 
 		System.out.println(">>> building profile config...");
 
 		Map<String, Option> options = new HashMap<>();
 
-		Map<String, String> activeOptions = CfgFileReader.fileToMap("C:\\jwisstool\\profiles\\default\\config.ini"); // TODO better name and
-																								// Replace
+		Map<String, String> activeOptions = CfgFileReader.fileToMap("C:\\jwisstool\\profiles\\default\\config.ini"); // TODO
+																														// better
+																														// name
+																														// and
+		// Replace
 		// with your .profile file path
 
 		for (ProfileCfgEnum cfg : ProfileCfgEnum.values()) { // TODO perfomance

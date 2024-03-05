@@ -3,17 +3,17 @@ package com.vmaffioli.jwisstool.engine.plugin;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.vmaffioli.jwissdevkit.interfaces.Plugin;
+import com.vmaffioli.jwissdevkit.interfaces.IPlugin;
 
 public class PluginReceiver {
 
-	private Map<String, Plugin> receiverMap;
+	private Map<String, IPlugin> receiverMap;
 
 	public PluginReceiver() {
 		this.receiverMap = new HashMap<>();
 	}
 
-	public void put(String key, Plugin plugin) {
+	public void put(String key, IPlugin plugin) {
 		this.receiverMap.put(key, plugin);
 	}
 

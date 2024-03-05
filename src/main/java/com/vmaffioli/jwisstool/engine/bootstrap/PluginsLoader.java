@@ -2,7 +2,7 @@ package com.vmaffioli.jwisstool.engine.bootstrap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.vmaffioli.jwisstool.engine.model.Configuration;
+import com.vmaffioli.jwissdevkit.models.configuration.Configuration;
 import com.vmaffioli.jwisstool.engine.plugin.PluginReceiver;
 
 import lombok.Getter;
